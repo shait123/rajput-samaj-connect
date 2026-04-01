@@ -90,10 +90,56 @@ The production-ready files will be in the `dist/` folder.
 This project can be deployed to any static hosting platform:
 
 - **Google Cloud Storage** — Upload the `dist/` folder as a static site
-- **Google Cloud Run** — Use with a Dockerfile for containerized hosting
+- **Google Cloud Run** — Use the included `Dockerfile` + `nginx.conf`
 - **Firebase Hosting** — `firebase deploy`
 - **Vercel / Netlify** — Connect GitHub repo for auto-deploy
 - **Lovable** — Publish directly from the editor
+
+### Deploy to Google Cloud Run
+
+> The repo includes a production-ready `Dockerfile` and `nginx.conf` for Cloud Run.
+
+1. **Authenticate and select your project**
+
+```bash
+gcloud auth login
+gcloud config set project YOUR_PROJECT_ID
+```
+
+2. **Enable required APIs**
+
+```bash
+gcloud services enable run.googleapis.com cloudbuild.googleapis.com artifactregistry.googleapis.com
+```
+
+3. **Build and push container image with Cloud Build**
+
+```bash
+gcloud builds submit --tag us-central1-docker.pkg.dev/YOUR_PROJECT_ID/rajput-samaj/website:latest
+```
+
+4. **Deploy to Cloud Run**
+
+```bash
+gcloud run deploy rajput-samaj-connect \
+  --image us-central1-docker.pkg.dev/YOUR_PROJECT_ID/rajput-samaj/website:latest \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated
+```
+
+5. **Open the service URL** (printed after deployment)
+
+### Redeploy after changes
+
+```bash
+gcloud builds submit --tag us-central1-docker.pkg.dev/YOUR_PROJECT_ID/rajput-samaj/website:latest
+gcloud run deploy rajput-samaj-connect \
+  --image us-central1-docker.pkg.dev/YOUR_PROJECT_ID/rajput-samaj/website:latest \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated
+```
 
 ## 🛠️ Tech Stack
 
