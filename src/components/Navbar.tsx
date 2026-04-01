@@ -2,19 +2,22 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo.png";
-
-const navItems = [
-  { label: "Home", path: "/" },
-  { label: "Achievements", path: "/category/achievements" },
-  { label: "Events", path: "/category/events" },
-  { label: "Announcements", path: "/category/announcements" },
-  { label: "Submit Post", path: "/submit" },
-  { label: "Contact", path: "/contact" },
-];
+import LanguageToggle from "@/components/LanguageToggle";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const { t } = useLanguage();
+
+  const navItems = [
+    { label: t("nav.home"), path: "/" },
+    { label: t("nav.achievements"), path: "/category/achievements" },
+    { label: t("nav.events"), path: "/category/events" },
+    { label: t("nav.announcements"), path: "/category/announcements" },
+    { label: t("nav.submitPost"), path: "/submit" },
+    { label: t("nav.contact"), path: "/contact" },
+  ];
 
   return (
     <nav className="sticky top-0 z-50 royal-gradient border-b border-gold/20">
@@ -23,11 +26,10 @@ const Navbar = () => {
           <Link to="/" className="flex items-center gap-3">
             <img src={logo} alt="Rajput Samaj" width={40} height={40} className="rounded-full" />
             <span className="font-heading text-lg font-bold text-primary-foreground tracking-wide">
-              Rajput Samaj
+              {t("hero.title")}
             </span>
           </Link>
 
-          {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-1">
             {navItems.map((item) => (
               <Link
@@ -42,19 +44,21 @@ const Navbar = () => {
                 {item.label}
               </Link>
             ))}
+            <LanguageToggle />
           </div>
 
-          {/* Mobile toggle */}
-          <button
-            onClick={() => setOpen(!open)}
-            className="md:hidden text-primary-foreground p-2"
-            aria-label="Toggle menu"
-          >
-            {open ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="flex items-center gap-2 md:hidden">
+            <LanguageToggle />
+            <button
+              onClick={() => setOpen(!open)}
+              className="text-primary-foreground p-2"
+              aria-label="Toggle menu"
+            >
+              {open ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
 
-        {/* Mobile nav */}
         {open && (
           <div className="md:hidden pb-4 space-y-1">
             {navItems.map((item) => (

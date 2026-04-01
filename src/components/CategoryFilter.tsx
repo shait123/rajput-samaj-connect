@@ -1,11 +1,5 @@
 import { Award, Calendar, Megaphone, LayoutGrid } from "lucide-react";
-
-const categories = [
-  { key: "all", label: "All Posts", icon: LayoutGrid },
-  { key: "achievements", label: "Achievements", icon: Award },
-  { key: "events", label: "Events", icon: Calendar },
-  { key: "announcements", label: "Announcements", icon: Megaphone },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface CategoryFilterProps {
   active: string;
@@ -13,6 +7,15 @@ interface CategoryFilterProps {
 }
 
 const CategoryFilter = ({ active, onChange }: CategoryFilterProps) => {
+  const { t } = useLanguage();
+
+  const categories = [
+    { key: "all", labelKey: "cat.all", icon: LayoutGrid },
+    { key: "achievements", labelKey: "cat.achievements", icon: Award },
+    { key: "events", labelKey: "cat.events", icon: Calendar },
+    { key: "announcements", labelKey: "cat.announcements", icon: Megaphone },
+  ];
+
   return (
     <div className="flex flex-wrap gap-2">
       {categories.map((cat) => {
@@ -28,7 +31,7 @@ const CategoryFilter = ({ active, onChange }: CategoryFilterProps) => {
             }`}
           >
             <Icon size={16} />
-            {cat.label}
+            {t(cat.labelKey)}
           </button>
         );
       })}
