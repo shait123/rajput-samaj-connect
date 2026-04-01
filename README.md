@@ -90,10 +90,99 @@ The production-ready files will be in the `dist/` folder.
 This project can be deployed to any static hosting platform:
 
 - **Google Cloud Storage** — Upload the `dist/` folder as a static site
-- **Google Cloud Run** — Use with a Dockerfile for containerized hosting
+- **Google Cloud Run** — Use the included `Dockerfile` + `nginx.conf`
 - **Firebase Hosting** — `firebase deploy`
 - **Vercel / Netlify** — Connect GitHub repo for auto-deploy
 - **Lovable** — Publish directly from the editor
+
+### Deploy to Google Cloud Run
+
+> The repo includes a production-ready `Dockerfile` and `nginx.conf` for Cloud Run.
+
+1. **Open Cloud Shell in the project and move into this repo**
+
+```bash
+gcloud config set project YOUR_PROJECT_ID
+git clone <YOUR_REPO_URL>
+cd rajput-samaj-connect
+```
+
+> If you are already inside the repo folder, run `pwd` and confirm you can see `Dockerfile` with `ls`.
+
+2. **Authenticate (if needed)**
+
+```bash
+gcloud auth login
+```
+
+3. **Enable required APIs**
+
+```bash
+gcloud services enable run.googleapis.com cloudbuild.googleapis.com artifactregistry.googleapis.com
+```
+
+4. **Create Artifact Registry repository (one-time setup)**
+
+```bash
+gcloud artifacts repositories create rajput-samaj \
+  --repository-format=docker \
+  --location=us-central1 \
+  --description="Docker repo for Rajput Samaj Connect" \
+  || true
+```
+
+5. **Build and push container image with Cloud Build**
+
+```bash
+gcloud builds submit --tag us-central1-docker.pkg.dev/YOUR_PROJECT_ID/rajput-samaj/website:latest .
+```
+
+6. **Deploy to Cloud Run**
+
+```bash
+gcloud run deploy rajput-samaj-connect \
+  --image us-central1-docker.pkg.dev/YOUR_PROJECT_ID/rajput-samaj/website:latest \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated
+```
+
+7. **Open the service URL** (printed after deployment)
+
+### Troubleshooting: `Dockerfile required when specifying --tag`
+
+If you run:
+
+```bash
+gcloud builds submit --tag ...
+```
+
+and get:
+
+```text
+Invalid value for [source]: Dockerfile required when specifying --tag
+```
+
+you are usually running the command from the wrong directory (for example `~` instead of your project folder).
+
+Fix:
+
+```bash
+cd /path/to/rajput-samaj-connect
+ls Dockerfile
+gcloud builds submit --tag us-central1-docker.pkg.dev/YOUR_PROJECT_ID/rajput-samaj/website:latest .
+```
+
+### Redeploy after changes
+
+```bash
+gcloud builds submit --tag us-central1-docker.pkg.dev/YOUR_PROJECT_ID/rajput-samaj/website:latest .
+gcloud run deploy rajput-samaj-connect \
+  --image us-central1-docker.pkg.dev/YOUR_PROJECT_ID/rajput-samaj/website:latest \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated
+```
 
 ## 🛠️ Tech Stack
 
