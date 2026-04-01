@@ -1,0 +1,56 @@
+import { Post } from "@/components/PostCard";
+
+export const samplePosts: Post[] = [
+  {
+    id: "1",
+    title: "Priya Rathore Tops State Medical Entrance",
+    description: "Priya Rathore, daughter of Shri Vikram Singh Rathore, has secured AIR 45 in NEET 2026. The entire community congratulates the family on this remarkable achievement.",
+    category: "achievements",
+    image: "https://images.unsplash.com/photo-1523050854058-8df90110c476?w=600&h=400&fit=crop",
+    author: "Vikram Singh Rathore",
+    date: "March 28, 2026",
+  },
+  {
+    id: "2",
+    title: "Annual Rajput Samaj Mahotsav 2026",
+    description: "The grand annual gathering of Rajput Samaj will be held on April 15, 2026 at Rajput Bhawan, Jaipur. All community members are cordially invited with their families.",
+    category: "events",
+    image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&h=400&fit=crop",
+    author: "Samaj Committee",
+    date: "March 25, 2026",
+  },
+  {
+    id: "3",
+    title: "New Scholarship Fund for Rajput Students",
+    description: "The Samaj has announced a new scholarship fund of ₹50 lakhs for meritorious students from the community. Applications open from April 1, 2026.",
+    category: "announcements",
+    image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&h=400&fit=crop",
+    author: "Education Committee",
+    date: "March 22, 2026",
+  },
+  {
+    id: "4",
+    title: "Arjun Singh Wins National Boxing Championship",
+    description: "Our community member Arjun Singh Chauhan has won the Gold Medal in the National Amateur Boxing Championship held in Delhi. Jai Rajputana!",
+    category: "achievements",
+    author: "Sports Wing",
+    date: "March 20, 2026",
+  },
+  {
+    id: "5",
+    title: "Marriage Ceremony - Shekhawat & Sisodiya Family",
+    description: "The wedding of Kunwar Bhavani Singh Shekhawat and Rajkumari Padmini Sisodiya will be held on May 10, 2026 at Hotel Royal Palace, Udaipur.",
+    category: "events",
+    image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop",
+    author: "Shekhawat Family",
+    date: "March 18, 2026",
+  },
+  {
+    id: "6",
+    title: "Community Blood Donation Camp",
+    description: "Rajput Samaj Sewa Samiti is organizing a blood donation camp on April 5, 2026 at the Community Hall. All healthy members are requested to participate.",
+    category: "announcements",
+    author: "Sewa Samiti",
+    date: "March 15, 2026",
+  },
+];
